@@ -33,7 +33,7 @@ public class Agent implements MarioAgent {
         int[][] marioSceneArray = model.getMarioSceneObservation();
         int[][] marioEnemyArray = model.getMarioEnemiesObservation();
 
-        if(isGoomba(marioEnemyArray)){
+        if(isGoomba(marioEnemyArray) || isPipe(marioSceneArray) || inAir(marioSceneArray)){
             actions[MarioActions.JUMP.getValue()] = true;
         }
         else{
@@ -41,9 +41,7 @@ public class Agent implements MarioAgent {
         }
 
         actions[MarioActions.RIGHT.getValue()] = true;
-
-        printArray(model.getScreenSceneObservation());
-
+        printArray(marioSceneArray);
         return actions;
     }
 
@@ -73,7 +71,8 @@ public class Agent implements MarioAgent {
     USE MARIO'S ENEMY ARRAY.
      */
     public boolean isGoomba(int[][] observationArray){
-        for(int x = 8; x < 10; x++) {
+        for(int x = 8; x < 13; x++) {
+            // Goomba val is 2.
             if (observationArray[x][8] == 2) {
                 return true;
             }
@@ -81,12 +80,42 @@ public class Agent implements MarioAgent {
         return false;
     }
 
+    /*
+    USE MARIO'S SCENE ARRAY. If a pipe is more than 2 tiles tall, RIP.
+     */
     public boolean isPipe(int[][] observationArray){
         for(int x = 8; x < 10; x++) {
-            if (observationArray[x][8] == 2) {
+            // Pipe val is 34.
+            if (observationArray[x][8] == 34) {
                 return true;
             }
         }
         return false;
+    }
+
+//    /*
+//    USE MARIO'S SCENE ARRAY. If a pipe is more than 2 tiles tall, RIP.
+//     */
+//    public boolean isObstacle(int[][] observationArray){
+//        for(int x = 8; x < 10; x++) {
+//            // Pipe val is 34.
+//            if (observationArray[x][8] == 34) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    /*
+    USE MARIO'S SCENE ARRAY.
+     */
+    public boolean inAir(int[][] observationArray){
+        return (observationArray[8][9] == 0);
+    }
+
+    public boolean inAir2(int[][] observationArray){
+        boolean inAir = (observationArray[8][9] == 0);
+        boolean obsInFront = (observationArray[9][8] != 0); //can add actual obs values
+        return (inAir && obsInFront);
     }
 }
