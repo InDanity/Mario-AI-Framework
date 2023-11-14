@@ -113,7 +113,7 @@ public class Agent implements MarioAgent {
         return (observationArray[8][9] == 0);
     }
 
-    public boolean inAir2(int[][] observationArray){
+    public boolean inAirWithFrontObstacle(int[][] observationArray){
         boolean inAir = (observationArray[8][9] == 0);
         boolean obsInFront = (observationArray[9][8] != 0); //can add actual obs values
         return (inAir && obsInFront);
