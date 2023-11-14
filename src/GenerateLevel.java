@@ -27,7 +27,7 @@ public class GenerateLevel {
         MarioGame game = new MarioGame();
         // printResults(game.playGame(level, 200, 0));
         for(;;){
-            printResults(game.runGame(new agents.sergeyPolikarpov.Agent(), level, 20, 0, true));
+            printResults(game.runGame(new agents.DanAndNan.Agent(), level, 20, 0, true));
         }
     }
 }
